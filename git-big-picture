@@ -843,7 +843,7 @@ class CommitGraph(object):
         for sha_one, labels, color in label_gen():
             dot_file_lines.append('\t"%(ref)s"[label="%(label)s", color="%(color)s", style=filled];' % {
                 'ref':sha_one,
-                'label':'\\n'.join(labels),
+                'label':'\\n'.join(labels + [l for l in self.git('git log --format=%B -n 1 {}'.format(sha_one)) if len(l.strip()) > 0]),
                 'color':color})
         for sha_one in self.dotdot:
             dot_file_lines.append('\t"%(ref)s"[label="..."];' % {'ref':sha_one})
