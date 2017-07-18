@@ -599,9 +599,9 @@ class Git(object):
             sha_ones = [e.group(0) for e in re.finditer(sha1_pattern, line)]
             count = len(sha_ones)
             if count > 1:
-                parents[sha_ones[0]] = set(sha_ones[1:])
+                parents[sha_ones[0]] = tuple(sha_ones[1:])
             elif count == 1:
-                parents[sha_ones[0]] = set()
+                parents[sha_ones[0]] = tuple()
         return parents
 
 
