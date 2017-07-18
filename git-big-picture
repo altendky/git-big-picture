@@ -852,9 +852,9 @@ class CommitGraph(object):
                 dot_file_lines.append('\t"%(ref)s"[label="%(label)s"];' % {
                     'ref':sha_one,
                     'label':'\n'.join(l for l in self.git('git log --format=%B -n 1 {}'.format(sha_one)) if len(l.strip()) > 0)})
-        for child, self.parents in self.parents.items():
-            for p in self.parents:
-                dot_file_lines.append('\t"%(source)s" -> "%(target)s";' % {'source':child, 'target':p})
+        for child, parents in self.parents.items():
+            for i, p in enumerate(parents):
+                dot_file_lines.append('\t"%(source)s" -> "%(target)s" [%(attrs)s];' % {'source':child, 'target':p, 'attrs': 'weight=100' if i == 0 else 'style=dashed'})
         dot_file_lines.append('}')
         return dot_file_lines
 
